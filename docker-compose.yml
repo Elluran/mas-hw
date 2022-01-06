@@ -1,0 +1,37 @@
+version: "3.3"
+services:
+  jabber:
+    image: prosody/prosody
+    environment:
+      LOCAL: "Neo"
+      DOMAIN: "jabber"
+      PASSWORD: "followthewhiterabbit"
+    volumes:
+      - ./configuration:/etc/prosody
+
+  flask:
+    build: task1/.
+    environment:
+      DOMAIN: "flask"
+      JABBER: "jabber"
+    ports:
+      - "7777:5000"
+  
+  jabber2:
+    image: prosody/prosody
+    environment:
+      LOCAL: "Neo"
+      DOMAIN: "jabber2"
+      PASSWORD: "followthewhiterabbit"
+    volumes:
+      - ./configuration2:/etc/prosody
+
+  flask2:
+    build: task2/.
+    environment:
+      DOMAIN: "flask2"
+      JABBER: "jabber2"
+      PORT: 5555
+    ports:
+      - "444:5555"
+    
